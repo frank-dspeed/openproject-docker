@@ -33,20 +33,15 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
     libpq-dev libqt4-webkit libqt4-dev libcurl4-openssl-dev zlib1g-dev ruby2.1 ruby2.1-dev \
  && apt-get -y clean \
  && groupadd openproject \
- && useradd --create-home -g openproject -g sudo openproject 
+ && useradd --create-home -g openproject -g sudo openproject \
  && BGHACK=$("/usr/bin/mysqld_safe") \
  && sleep 7s \
  && mysqladmin -u root password $MYSQL_PASSWORD \
- && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"'
-
-ADD ruby-switch /usr/local/bin/ruby-switch
-RUN chmod +x /usr/local/bin/ruby-switch \ 
+ && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
-    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
- &&	ruby-switch --set ruby2.1
-
+    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler 
 ADD ./files/Gemfile.local /home/openproject/openproject
 ADD ./files/Gemfile.plugins /home/openproject/openproject
 RUN ruby -v \
