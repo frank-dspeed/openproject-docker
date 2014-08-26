@@ -38,7 +38,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
 RUN apt-get install -y libgdbm-dev libncurses5-dev automake libtool bison libffi-dev 
 ENV HOME /home/openproject
 ADD ruby.sh /
-RUN chmod +x ruby.sh && /ruby.sh
+ADD ruby-switch /
+RUN chmod +x ruby.sh ruby-switch && /ruby.sh
 RUN ruby -v \
  && cd /home/openproject \
  && git clone --depth 1 https://github.com/opf/openproject.git \
