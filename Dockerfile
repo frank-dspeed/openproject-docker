@@ -35,7 +35,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
  && chown openproject /home/openproject 
-RUN apt-get install -y libgdbm-dev libncurses5-dev automake libtool bison libffi-dev \
+RUN apt-get install -y libgdbm-dev libncurses5-dev automake libtool bison libffi-dev 
 ADD ruby.sh /
 RUN chmod +x ruby.sh && /ruby.sh
 RUN ruby -v \
