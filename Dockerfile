@@ -38,10 +38,9 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && BGHACK=$(/usr/bin/mysqld_safe &) \
  && sleep 7s \
  && mysqladmin -u root password $MYSQL_PASSWORD \
- && echo "#mysql -uroot -p$MYSQL_PASSWORD -e \"CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO 'openproject'@'localhost' IDENTIFIED BY '$OPENPROJECT_DB_PASSWORD'; FLUSH PRIVILEGES;\"" \
+ && echo "#mysql -uroot -p$MYSQL_PASSWORD -e \"CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO 'openproject'@'localhost' IDENTIFIED BY '$OPENPROJECT_DB_PASSWORD'; FLUSH PRIVILEGES;\"" 
 
-
-ADD ruby-switch /usr/local/bin/
+ADD ruby-switch /usr/local/bin
 RUN chmod +x /usr/local/bin/ruby-switch \ 
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
