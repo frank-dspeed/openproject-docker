@@ -40,6 +40,8 @@ ENV HOME /home/openproject
 ADD ruby.sh /
 ADD ruby-switch /
 RUN chmod +x ruby.sh ruby-switch && /ruby.sh
+ADD ./files/Gemfile.local /Gemfile.local
+ADD ./files/Gemfile.plugins /Gemfile.plugins
 RUN ruby -v \
  && cd /home/openproject \
  && git clone --depth 1 https://github.com/opf/openproject.git \
@@ -93,8 +95,7 @@ test: \n\
  && easy_install supervisor \
  && mkdir /var/log/supervisor/
 
-ADD ./files/Gemfile.local /Gemfile.local
-ADD ./files/Gemfile.plugins /Gemfile.plugins
+
 ADD ./files/passenger-standalone.json /home/openproject/openproject/passenger-standalone.json
 ADD ./files/start_openproject.sh /home/openproject/start_openproject.sh
 ADD ./files/start_openproject_worker.sh /home/openproject/start_openproject_worker.sh
