@@ -37,7 +37,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && chown openproject /home/openproject 
 RUN apt-get install -y libgdbm-dev libncurses5-dev automake libtool bison libffi-dev \
  && curl -L https://get.rvm.io | bash -s stable 
-RUN source ~/.rvm/scripts/rvm \
+RUN /.rvm/scripts/rvm \
  && echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc \
  && rvm install 2.1.2 \
  && rvm use 2.1.2 --default
