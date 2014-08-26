@@ -28,10 +28,9 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get update -q \
  && locale-gen en_US en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
-    curl git wget passanger libreadline-dev libgraphviz-dev libgvc6 memcached mysql-server \
-    install libxml2-dev libxslt1-dev nodejs \
-    imagemagick libmagickwand-dev libmysqlclient-dev libsqlite3-dev libpq-dev libqt4-webkit libqt4-dev \
-    libcurl4-openssl-dev zlib1g-dev ruby2.1 ruby2.1-dev \
+    curl git wget passenger libreadline-dev libgraphviz-dev libgvc6 memcached mysql-server \
+    libxml2-dev libxslt1-dev nodejs imagemagick libmagickwand-dev libmysqlclient-dev libsqlite3-dev \
+    libpq-dev libqt4-webkit libqt4-dev libcurl4-openssl-dev zlib1g-dev ruby2.1 ruby2.1-dev \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject 
