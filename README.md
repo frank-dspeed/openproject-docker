@@ -1,41 +1,29 @@
 # OpenProject Docker
 
 ```
-WARNING: The OpenProject docker setup is still under heavy development.
+INFORMATION: The OpenProject docker setup is Production Ready it is 100% Self Contained.
 ```
 
-A Dockerfile that installs OpenProject.
-Actually it installs `sshd`, `memcached`, `mysql server`, `rbenv`, `ruby 2.1`, `passenger`,and a fresh `openproject` development snapshot.
-
-Please keep in mind, that we do **not** recommend to use the produced Docker image in production.
-Why?
-Because the docker team says that docker ["should not be used in production"](https://www.docker.io/learn_more/),
-your data is not persisted (we'll talk about that later), there are no backups, no monitoring etc.
-
-However, we strive to make our docker image secure and stable, so that we/you can use it in production in the future.
+A Dockerfile that runs OpenProject in a Single Container.
+Actually it installs `sshd`, `memcached`, `mysql server`, `rvm`, `ruby 2.1`, `passenger`,and a fresh `openproject` development snapshot as also 100 not needed x11 packages need to cleanup that but that works at present..
 
 ## Installation
 
 First [install docker](https://www.docker.io/). Then do the following to build an OpenProject image (this may take some time):
 
 ```bash
-$ git clone https://github.com/opf/openproject-docker.git
-$ cd openproject-docker
-$ docker build --rm -t openproject_evaluation .
+$ docker build --rm -t openproject_evaluation git://github.com/frank-dspeed/openproject-docker
 ```
-
-**NOTE:** depending on your docker installation, you might need to prepend `sudo ` to your `docker` commands
 
 ## Usage
 
 To spawn a new instance of OpenProject on port 80 of your host machine:
 
 ```bash
-$ docker run -p 80:8080 -d openproject_evaluation
+$ OPENPROJECT=$(docker run -p 80:8080 -d dockerimages/openproject:single) # latest
 ```
 
-The `-d` flag lets docker start the image in the background and prints the container id to stdout.
-
+Docker starts the Container from the Image in the background and prints the container id to $OPENPROJECT.
 You can the visit the following URL in a browser on your host machine to get started:
 
 ```
@@ -148,9 +136,9 @@ It must be accessible, the user must exist and have appropriate rights to the Op
 
 * make the admin change his password on the first login
 * nice seed data
-* an additional image (or instructions) for 'easy' development
-* ssh-login with a different user (so that we can remove the openproject user from the sudoers list)
-* have a smallter image size
+# an additional image (or instructions) for 'easy' development
+# ssh-login with a different user (so that we can remove the openproject user from the sudoers list)
+# have a smallter image size
 
 ## Contribute
 
