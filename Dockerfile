@@ -10,13 +10,16 @@ EXPOSE 80
 # Install Python 
 # Install APT-SSH Transporter.
 #
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main multiverse universe" > /etc/apt/sources.list
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse \n\
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse \n\
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse \n\
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" > /etc/apt/sources.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get update -q && apt-get -y install apt-transport-https ca-certificates \
  && echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list \
  && apt-get update -q \
- && locale-gen en_US en_US.UTF-8 \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
+ && locale-gen en_US en_US.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
     build-essential curl git zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev \
     libxslt-dev libxslt1-dev libmysqlclient-dev libpq-dev libsqlite3-dev libyaml-0-2 libmagickwand-dev \
     libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc5 ruby-dev memcached \
