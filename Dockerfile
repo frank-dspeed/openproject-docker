@@ -17,10 +17,10 @@ EXPOSE 80
 # Install APT-SSH Transporter.
 #
 RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse \n\
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse \n\
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse \n\
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" > /etc/apt/sources.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
+    deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse \n\
+    deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse \n\
+    deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" > /etc/apt/sources.list \
+ && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
  && echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox.list \
  && apt-get update -q && apt-get -y install apt-transport-https ca-certificates \
@@ -34,8 +34,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
- && BGHACK=$("/usr/bin/mysqld_safe") \
- && sleep 7s \
  && mysqladmin -u root password $MYSQL_PASSWORD \
  && ps aux | grep mysql \
  && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
@@ -46,10 +44,18 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && cd /home/openproject \
  && git clone --depth 1 https://github.com/opf/openproject.git \
  && cd openproject \
-ADD ./files/Gemfile.local /home/openproject/openproject
-ADD ./files/Gemfile.plugins /home/openproject/openproject
-RUN echo " \
-production: \n\
+ && echo "# run server with unicorn \n\
+    \n\
+    gem 'passenger'" > /home/openproject/openproject Gemfile.local \
+ && echo "# take the latest and greatest openproject gems from their unstable git branches \n\
+# this way we are up-to-date but might experience some bugs \n\
+\n\
+gem 'openproject-plugins',    :git => 'https://github.com/opf/openproject-plugins.git',         :branch => 'dev' \n\
+gem 'openproject-backlogs',   :git => 'https://github.com/finnlabs/openproject-backlogs.git',   :branch => 'dev' \n\
+gem 'openproject-pdf_export', :git => 'https://github.com/finnlabs/openproject-pdf_export.git', :branch => 'dev' \n\
+gem 'openproject-meeting',    :git => 'https://github.com/finnlabs/openproject-meeting.git',    :branch => 'dev' \n\
+gem 'openproject-costs',      :git => 'https://github.com/finnlabs/openproject-costs.git',      :branch => 'dev' "> /home/openproject/openproject/Gemfile.plugins \
+ && echo "production: \n\
   adapter: mysql2 \n\
   database: openproject \n\
   host: localhost \n\
