@@ -42,14 +42,13 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
-    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler 
-ADD ./files/Gemfile.local /home/openproject/openproject
-ADD ./files/Gemfile.plugins /home/openproject/openproject
-RUN ruby -v \
+    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
  && cd /home/openproject \
  && git clone --depth 1 https://github.com/opf/openproject.git \
  && cd openproject \
- && echo " \
+ADD ./files/Gemfile.local /home/openproject/openproject
+ADD ./files/Gemfile.plugins /home/openproject/openproject
+RUN echo " \
 production: \n\
   adapter: mysql2 \n\
   database: openproject \n\
