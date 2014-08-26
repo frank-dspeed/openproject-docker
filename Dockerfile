@@ -31,14 +31,14 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
     curl git wget passanger libreadline-dev libgraphviz-dev libgvc6 memcached mysql-server \
     install libxml2-dev libxslt1-dev nodejs \
     imagemagick libmagickwand-dev libmysqlclient-dev libsqlite3-dev libpq-dev libqt4-webkit libqt4-dev \
-    libcurl4-openssl-dev zlib1g-dev ruby2.1 ruby2.1-dev
+    libcurl4-openssl-dev zlib1g-dev ruby2.1 ruby2.1-dev \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
- && BGHACK=$(/usr/bin/mysqld_safe &) \
+ && BGHACK=$("/usr/bin/mysqld_safe") \
  && sleep 7s \
  && mysqladmin -u root password $MYSQL_PASSWORD \
- && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;\"'
+ && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"'
 
 ADD ruby-switch /usr/local/bin
 RUN chmod +x /usr/local/bin/ruby-switch \ 
