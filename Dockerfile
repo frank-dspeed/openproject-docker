@@ -12,14 +12,15 @@ EXPOSE 80
 #
 # RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
+ && apt-get update -q && apt-get -y install apt-transport-https ca-certificates \
  && echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list \
  && apt-get update -q \
  && locale-gen en_US en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
     build-essential curl git zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev \
     libxslt-dev libxslt1-dev libmysqlclient-dev libpq-dev libsqlite3-dev libyaml-0-2 libmagickwand-dev \
-    libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc5 ruby-dev apt-transport-https ca-certificates \
-    memcached subversion vim wget python-setuptools openssh-server sudo pwgen libcurl4-openssl-dev passenger \
+    libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc5 ruby-dev memcached \
+    subversion vim wget python-setuptools openssh-server sudo pwgen libcurl4-openssl-dev passenger \
     mysql-client mysql-server \
  && apt-get -y clean
 #RUN chown root: /etc/apt/sources.list.d/passenger.list
