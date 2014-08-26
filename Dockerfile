@@ -22,7 +22,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
     build-essential curl git zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev \
     libxslt-dev libxslt1-dev libmysqlclient-dev libpq-dev libsqlite3-dev libyaml-0-2 libmagickwand-dev \
-    libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc5 ruby-dev memcached \
+    libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc6 ruby-dev memcached \
     subversion vim wget python-setuptools openssh-server sudo pwgen libcurl4-openssl-dev passenger \
     mysql-client mysql-server \
  && apt-get -y clean
