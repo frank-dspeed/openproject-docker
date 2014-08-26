@@ -37,8 +37,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && chown openproject /home/openproject \
  && git clone --depth 1 https://github.com/sstephenson/rbenv.git /home/openproject/.rbenv \
  && git clone --depth 1 https://github.com/sstephenson/ruby-build.git /home/openproject/.rbenv/plugins/ruby-build \
- && echo '==========evel rbenv source it on init' \
- && echo 'eval "$(rbenv init -)"' \
  && /home/openproject/.rbenv/plugins/ruby-build/install.sh
 RUN apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev \
  && curl -L https://get.rvm.io | bash -s stable \
