@@ -34,7 +34,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
- && chown openproject /home/openproject \
+ && chown openproject /home/openproject 
 RUN apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev \
  && curl -L https://get.rvm.io | bash -s stable \
  && source ~/.rvm/scripts/rvm \
