@@ -4,7 +4,7 @@ pushd /tmp
 ## Brightbox Ruby 1.9.3, 2.0 and 2.1
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6
 echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox.list
-apt-get install -y ruby2.1 ruby2.1-dev
+apt-get update && apt-get install -y ruby2.1 ruby2.1-dev
 gem2.1 install rake bundler --no-rdoc --no-ri
 
 ## This script is to be run after ruby1.9.sh, ruby2.0.sh and ruby2.1.sh.
