@@ -35,7 +35,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
- && exec "/usr/bin/mysqld_safe &" \
+ && BGHACK=$(/usr/bin/mysqld_safe &) \
  && sleep 7s \
  && mysqladmin -u root password $MYSQL_PASSWORD \
  && echo "#mysql -uroot -p$MYSQL_PASSWORD -e \"CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO 'openproject'@'localhost' IDENTIFIED BY '$OPENPROJECT_DB_PASSWORD'; FLUSH PRIVILEGES;\"" \
