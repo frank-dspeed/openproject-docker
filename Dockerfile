@@ -22,7 +22,7 @@ deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted uni
 deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" > /etc/apt/sources.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
- && echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox.list
+ && echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox.list \
  && apt-get update -q && apt-get -y install apt-transport-https ca-certificates \
  && echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list \
  && apt-get update -q \
@@ -35,12 +35,12 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-get -y clean \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject 
-# && BGHACK=$("/usr/bin/mysqld_safe") \
-# && sleep 7s \
-# && mysqladmin -u root password $MYSQL_PASSWORD \
-# && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"'
+ && BGHACK=$("/usr/bin/mysqld_safe") \
+ && sleep 7s \
+ && mysqladmin -u root password $MYSQL_PASSWORD \
+ && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"'
 
-ADD ruby-switch /usr/local/bin
+ADD ruby-switch /usr/local/bin/ruby-switch
 RUN chmod +x /usr/local/bin/ruby-switch \ 
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
