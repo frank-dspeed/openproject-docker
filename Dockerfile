@@ -40,12 +40,16 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && echo '==========evel rbenv source it on init' \
  && echo 'eval "$(rbenv init -)"' \
  && /home/openproject/.rbenv/plugins/ruby-build/install.sh
-RUN eval "$(rbenv init -)" && rbenv install 2.1.0 \
- && rbenv global 2.1.0 \
+RUN apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev \
+ && curl -L https://get.rvm.io | bash -s stable \
+ && source ~/.rvm/scripts/rvm \
+ && echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc \
+ && rvm install 2.1.2 \
+ && rvm use 2.1.2 --default \
+ && ruby -v \
  && cd /home/openproject \
  && git clone --depth 1 https://github.com/opf/openproject.git \
  && cd openproject \
- && rbenv local 2.1.0 \
  && mv /Gemfile.plugins /home/openproject/openproject/Gemfile.plugins \
  && mv /Gemfile.local /home/openproject/openproject/Gemfile.local
 
