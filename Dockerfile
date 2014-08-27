@@ -42,15 +42,13 @@ RUN echo "Inserting: Ubuntu Mirrors for all Packages!:" \
  && groupadd openproject \
  && useradd --create-home -g openproject -g sudo openproject \
  && mysqladmin -u root password $MYSQL_PASSWORD \
- && ps aux | grep mysql 
-RUN echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
- && cd /home/openproject \
- && ls -ao
-ADD https://github.com/opf/openproject/archive/stable.zip /home/openproject/openproject
-RUN echo 'mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
- && cd /home/openproject \
- && chmod -R 0777 /home/openproject \
- && ls -ao
+ && ps aux | grep mysql \
+ && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
+ 
+USER openproject
+WORKDIR /home/openproject
+RUN git clone git://github.com/opf/openproject
+RUN ls -ao
 RUN echo "# run server with unicorn \n\
     \n\
     gem 'passenger'" > /home/openproject/openproject Gemfile.local \
@@ -69,7 +67,6 @@ RUN echo "# run server with unicorn \n\
   username: root \n\
   password: $MYSQL_PASSWORD \n\
   encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml \project.git \
- && cd openproject \
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
