@@ -38,7 +38,7 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted uni
  && ps aux | grep mysql \
  && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
  && cd /home/openproject \
- && git clone --depth 1 https://github.com/opf/open
+ && git clone --depth 1 https://github.com/opf/open \
  && echo "# run server with unicorn \n\
     \n\
     gem 'passenger'" > /home/openproject/openproject Gemfile.local \
