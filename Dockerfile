@@ -16,15 +16,22 @@ EXPOSE 80
 # Install Python 
 # Install APT-SSH Transporter.
 #
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse \n\
+RUN echo "Inserting: Ubuntu Mirrors for all Packages!:" \
+ && echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse \n\
     deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse \n\
     deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse \n\
     deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" > /etc/apt/sources.list \
+ && echo "Adding: GPG Keys for Passanger & Ruby 2.1:" \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
+ && echo "Adding: Ruby PPA Britghtbox for Package Ruby 2.1:" \
  && echo deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main > /etc/apt/sources.list.d/brightbox.list \
+ && echo "Running: Apt Update and install  apt-transporter https for Passanger Repo" \
  && apt-get update -q && apt-get -y install apt-transport-https ca-certificates \
+ && echo "Inserting: Passanger PPA for Passanger App Server:" \
  && echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list \
+ && echo "Running Apt Update now with https support for Passanger Install OpenProject and Ruby Dependencys \n\
+    and running locale gen for ruby compatiblity this may take ...." \
  && apt-get update -q \
  && locale-gen en_US en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
