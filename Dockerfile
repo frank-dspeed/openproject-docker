@@ -57,23 +57,7 @@ RUN echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT
   host: localhost \n\
   username: root \n\
   password: $MYSQL_PASSWORD \n\
-  encoding: utf8 \n\
- \n\
-development: \n\
-  adapter: mysql2 \n\
-  database: openproject \n\
-  host: localhost \n\
-  username: root \n\
-  password: $MYSQL_PASSWORD \n\
-  encoding: utf8 \n\
- \n\
-test: \n\
-  adapter: mysql2 \n\
-  database: openproject_test \n\
-  host: localhost \n\
-  username: root \n\
-  password: $MYSQL_PASSWORD \n\
-  encoding: utf8" > /home/openproject/openproject/config/database.yml \project.git \
+  encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml \project.git \
  && cd openproject \
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
