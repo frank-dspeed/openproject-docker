@@ -51,7 +51,7 @@ RUN git clone git://github.com/opf/openproject
 RUN ls -ao
 RUN echo "# run server with unicorn \n\
     \n\
-    gem 'passenger'" > /home/openproject/openproject Gemfile.local \
+    gem 'passenger'" > /home/openproject/openproject\Gemfile.local \
  && echo "# take the latest and greatest openproject gems from their unstable git branches \n\
     # this way we are up-to-date but might experience some bugs \n\
     \n\
@@ -66,7 +66,7 @@ RUN echo "# run server with unicorn \n\
   host: localhost \n\
   username: root \n\
   password: $MYSQL_PASSWORD \n\
-  encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml \project.git \
+  encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml project.git \
  && gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
