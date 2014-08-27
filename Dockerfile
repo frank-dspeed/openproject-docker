@@ -75,7 +75,6 @@ RUN echo "# run server with unicorn \n\
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
     /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
- && bundle install \
  && bundle exec rake db:create:all \
  && bundle exec rake db:migrate \
  && bundle exec rake generate_secret_token \
