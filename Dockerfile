@@ -69,12 +69,12 @@ RUN echo "# run server with unicorn \n\
   encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml project.git 
  USER root
  RUN mkdir -p /var/lib/gems && chown openproject /var/lib/gems /usr/local/bin /etc
+  && chown -R openproject /home/openproject \
  USER openproject
  RUN gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
     /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
- && chown -R openproject /home/openproject \
  && bundle install \
  && bundle exec rake db:create:all \
  && bundle exec rake db:migrate \
