@@ -45,9 +45,9 @@ RUN echo "Inserting: Ubuntu Mirrors for all Packages!:" \
  && ps aux | grep mysql 
 RUN echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
  && cd /home/openproject \
- && ls -ao \
- && git clone https://github.com/opf/openproject \
- && echo "# run server with unicorn \n\
+ && ls -ao
+ADD https://github.com/opf/openproject/archive/stable.zip /home/openproject/openproject
+RUN echo "# run server with unicorn \n\
     \n\
     gem 'passenger'" > /home/openproject/openproject Gemfile.local \
  && echo "# take the latest and greatest openproject gems from their unstable git branches \n\
