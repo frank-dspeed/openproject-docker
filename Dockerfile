@@ -79,7 +79,7 @@ test: \n\
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
     /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
-  && chown openproject /home/openproject 
+ && chown openproject /home/openproject \
  && bundle install \
  && bundle exec rake db:create:all \
  && bundle exec rake db:migrate \
