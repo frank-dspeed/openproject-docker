@@ -3,7 +3,7 @@ FROM dockerimages/ubuntu-core:14.04
 
 MAINTAINER Frank Lemanschik (Direkt SPEED), info@dspeed.eu
 
-ENV MYSQL_PASSWORD=`pwgen -c -n -1 15`
+ENV MYSQL_PASSWORD=`random`
 ENV RBENV_ROOT /home/openproject/.rbenv
 ENV PATH /home/openproject/.rbenv/bin:$PATH
 ENV CONFIGURE_OPTS --disable-install-doc
