@@ -40,7 +40,7 @@ mysqladmin -u root password $MYSQL_PASSWORD
 
 # Download openproject and some public plugins
 cd /home/openproject
-git clone --depth 1 https://github.com/opf/openproject.git
+git clone -b $OPF_BRANCH --single-branch git://git://github.com/opf/openproject.git
 cd openproject
 rbenv local 2.1.0
 mv /Gemfile.plugins /home/openproject/openproject/Gemfile.plugins
