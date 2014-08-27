@@ -22,7 +22,7 @@
 # See COPYRIGHT.md for more details.
 #++
 
-FROM stackbrew/ubuntu:13.10
+FROM ubuntu:14.04
 
 MAINTAINER OpenProject Foundation (opf), info@openproject.org
 ENV DEBIAN_FRONTEND noninteractive
@@ -38,7 +38,7 @@ EXPOSE 22
 # RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-get update -q
 RUN locale-gen en_US en_US.UTF-8
-RUN apt-get install -y --force-yes build-essential curl git zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev libxslt1-dev libmysqlclient-dev libpq-dev libsqlite3-dev libyaml-0-2 libmagickwand-dev libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc5 ruby-dev
+RUN apt-get install -y --force-yes build-essential curl git zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev libxslt1-dev libmysqlclient-dev libpq-dev libsqlite3-dev libyaml-0-2 libmagickwand-dev libmagickcore-dev libmagickcore5-extra libgraphviz-dev libgvc6 ruby-dev
 
 # Install utilities
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
