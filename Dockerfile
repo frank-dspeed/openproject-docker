@@ -68,8 +68,8 @@ RUN echo "# run server with unicorn \n\
   password: $MYSQL_PASSWORD \n\
   encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml project.git 
  USER root
- RUN mkdir -p /var/lib/gems && chown openproject /var/lib/gems /usr/local/bin /etc
-  && chown -R openproject /home/openproject \
+ RUN mkdir -p /var/lib/gems && chown openproject /var/lib/gems /usr/local/bin /etc \
+  && chown -R openproject /home/openproject 
  USER openproject
  RUN gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
