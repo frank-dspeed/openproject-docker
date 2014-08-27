@@ -1,37 +1,14 @@
 # OpenProject Docker
 
-```
-WARNING: The OpenProject docker setup is still under heavy development.
-```
-
 A Dockerfile that installs OpenProject.
 Actually it installs `sshd`, `memcached`, `mysql server`, `rbenv`, `ruby 2.1`, `passenger`,and a fresh `openproject` development snapshot.
-
-Please keep in mind, that we do **not** recommend to use the produced Docker image in production.
-Why?
-Because the docker team says that docker ["should not be used in production"](https://www.docker.io/learn_more/),
-your data is not persisted (we'll talk about that later), there are no backups, no monitoring etc.
-
-However, we strive to make our docker image secure and stable, so that we/you can use it in production in the future.
-
-## Installation
-
-First [install docker](https://www.docker.io/). Then do the following to build an OpenProject image (this may take some time):
-
-```bash
-$ git clone https://github.com/opf/openproject-docker.git
-$ cd openproject-docker
-$ docker build --rm -t openproject_evaluation .
-```
-
-**NOTE:** depending on your docker installation, you might need to prepend `sudo ` to your `docker` commands
 
 ## Usage
 
 To spawn a new instance of OpenProject on port 80 of your host machine:
 
 ```bash
-$ docker run -p 80:8080 -d openproject_evaluation
+$ docker run -p 80:8080 -d openpf/openproject:stable
 ```
 
 The `-d` flag lets docker start the image in the background and prints the container id to stdout.
@@ -49,7 +26,7 @@ To connect to your OpenProject image, you have to tell docker to connect that po
 Start your image with the additional port:
 
 ```bash
-$ docker run -p 8080 -p 20 -d openproject_evaluation
+$ docker run -p 8080 -p 20 -d openpf/openproject:stable
 ```
 
 You may find out which of your local ports is mapped to the image-22-port with `docker port` and connect to your image:
@@ -61,7 +38,7 @@ $ openproject@localhost's password:
 
 Well, we need a password now. The openproject account is secured with a random password.
 We set that password during the image setup - watch for a line like `ssh openproject password: <random password>`
-during the `docker build -t="openproject_evaluation" .` step.
+during the `docker build -t="openpf/openproject" .` step.
 
 ## Further thoughts
 
@@ -111,7 +88,7 @@ docker run -d \
   -e "SMTP_ENABLE_STARTTLS_AUTO=true" \
   -e "SMTP_USER_NAME=user" \
   -e "SMTP_PASSWORD=password" \
-  openproject_evaluation
+  openpf/openproject
 ```
 
 Of course you have to insert the your `user`, `password`, etc. values.
@@ -134,7 +111,7 @@ The variable must be set when starting the OpenProject docker image:
 docker run -d \
   -p 8080 -p 20
   -e "DATABASE_URL=mysql2://user:password@host/db" \
-  openproject_evaluation
+  openpf/openproject
 ```
 
 Of course you have to insert the correct `user`, `password`, `host` and `db` (database name).
@@ -143,6 +120,17 @@ Of course you have to insert the correct `user`, `password`, `host` and `db` (da
 
 **Note:** make sure, that your external database is set-up correctly!
 It must be accessible, the user must exist and have appropriate rights to the OpenProject database, and the schema must be up-to-date (run `bundle exec rake db:migrate` targeted at your remote database to update the schema).
+
+
+
+## building
+
+```bash
+$ docker build --rm -t openpf/openproject git://github.com/opf/openproject.git
+```
+
+**NOTE:** depending on your docker installation, you might need to prepend `sudo ` to your `docker` commands
+
 
 ### Features which we'd love to have
 
