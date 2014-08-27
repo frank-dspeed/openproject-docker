@@ -49,6 +49,7 @@ RUN echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT
 ADD https://github.com/opf/openproject/archive/stable.zip /home/openproject/openproject
 RUN echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
  && cd /home/openproject \
+ && chmod -R 0777 /home/openproject
  && ls -ao
 RUN echo "# run server with unicorn \n\
     \n\
