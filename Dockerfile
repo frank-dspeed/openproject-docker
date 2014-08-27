@@ -27,6 +27,8 @@ FROM ubuntu:14.04
 MAINTAINER OpenProject Foundation (opf), info@openproject.org
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV OPF_BRANCH stable
+
 # expose rails server port
 EXPOSE 8080
 # export ssh port; user is openproject; password will be generated and is dumped to stdout during the build
