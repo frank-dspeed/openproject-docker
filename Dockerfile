@@ -44,7 +44,7 @@ RUN apt-get install -y --force-yes build-essential curl git zlib1g-dev libssl-de
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 # Add HTTPS support for APT. Passengers APT repository is stored on an HTTPS server.
 RUN apt-get install -q -y --force-yes apt-transport-https ca-certificates
-RUN echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger saucy main' > /etc/apt/sources.list.d/passenger.list
+RUN echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list
 RUN chown root: /etc/apt/sources.list.d/passenger.list
 RUN chmod 600 /etc/apt/sources.list.d/passenger.list
 RUN apt-get update -q
@@ -84,5 +84,5 @@ ADD ./files/start_openproject_worker.sh /home/openproject/start_openproject_work
 # And, finally, launch supervisord in foreground mode.
 #
 ADD ./files/supervisord.conf /etc/supervisord.conf
-ENTRYPOINT ["supervisord", "-n"]
+CMD ["supervisord", "-n"]
 RUN echo "INFO: openproject ssh password: `cat /root/openproject-root-pw.txt`"
