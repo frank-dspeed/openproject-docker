@@ -47,7 +47,7 @@ RUN echo "Inserting: Ubuntu Mirrors for all Packages!:" \
  
 USER openproject
 WORKDIR /home/openproject
-RUN git clone git://github.com/opf/openproject
+RUN git clone -b stable --single-branch git://git://github.com/opf/openproject.git
 RUN ls -ao
 RUN echo "# run server with unicorn \n\
     \n\
