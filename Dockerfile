@@ -66,8 +66,9 @@ RUN echo "# run server with unicorn \n\
   host: localhost \n\
   username: root \n\
   password: $MYSQL_PASSWORD \n\
-  encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml project.git \
- && gem2.1 install rake bundler --no-rdoc --no-ri \
+  encoding: utf8 \n\n" > /home/openproject/openproject/config/database.yml project.git 
+ USER openproject
+ RUN gem2.1 install rake bundler --no-rdoc --no-ri \
  && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
  && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
     /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
