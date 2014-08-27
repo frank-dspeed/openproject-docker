@@ -37,24 +37,19 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted uni
  && mysqladmin -u root password $MYSQL_PASSWORD \
  && ps aux | grep mysql \
  && echo '#mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE openproject; GRANT ALL PRIVILEGES ON openproject.* TO "openproject"@"localhost" IDENTIFIED BY "$OPENPROJECT_DB_PASSWORD"; FLUSH PRIVILEGES;"' \
- && gem2.1 install rake bundler --no-rdoc --no-ri \
- && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
- && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
-    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
  && cd /home/openproject \
- && git clone --depth 1 https://github.com/opf/openproject.git \
- && cd openproject \
+ && git clone --depth 1 https://github.com/opf/open
  && echo "# run server with unicorn \n\
     \n\
     gem 'passenger'" > /home/openproject/openproject Gemfile.local \
  && echo "# take the latest and greatest openproject gems from their unstable git branches \n\
-# this way we are up-to-date but might experience some bugs \n\
-\n\
-gem 'openproject-plugins',    :git => 'https://github.com/opf/openproject-plugins.git',         :branch => 'dev' \n\
-gem 'openproject-backlogs',   :git => 'https://github.com/finnlabs/openproject-backlogs.git',   :branch => 'dev' \n\
-gem 'openproject-pdf_export', :git => 'https://github.com/finnlabs/openproject-pdf_export.git', :branch => 'dev' \n\
-gem 'openproject-meeting',    :git => 'https://github.com/finnlabs/openproject-meeting.git',    :branch => 'dev' \n\
-gem 'openproject-costs',      :git => 'https://github.com/finnlabs/openproject-costs.git',      :branch => 'dev' "> /home/openproject/openproject/Gemfile.plugins \
+    # this way we are up-to-date but might experience some bugs \n\
+    \n\
+    gem 'openproject-plugins',    :git => 'https://github.com/opf/openproject-plugins.git',         :branch => 'dev' \n\
+    gem 'openproject-backlogs',   :git => 'https://github.com/finnlabs/openproject-backlogs.git',   :branch => 'dev' \n\
+    gem 'openproject-pdf_export', :git => 'https://github.com/finnlabs/openproject-pdf_export.git', :branch => 'dev' \n\
+    gem 'openproject-meeting',    :git => 'https://github.com/finnlabs/openproject-meeting.git',    :branch => 'dev' \n\
+    gem 'openproject-costs',      :git => 'https://github.com/finnlabs/openproject-costs.git',      :branch => 'dev' "> /home/openproject/openproject/Gemfile.plugins \
  && echo "production: \n\
   adapter: mysql2 \n\
   database: openproject \n\
@@ -77,8 +72,13 @@ test: \n\
   host: localhost \n\
   username: root \n\
   password: $MYSQL_PASSWORD \n\
-  encoding: utf8" > /home/openproject/openproject/config/database.yml \
- && chown openproject /home/openproject 
+  encoding: utf8" > /home/openproject/openproject/config/database.yml \project.git \
+ && cd openproject \
+ && gem2.1 install rake bundler --no-rdoc --no-ri \
+ && echo "gem: --no-ri --no-rdoc" > /etc/gemrc \
+ && sed -i 's|/usr/bin/env ruby.*$|/usr/bin/env ruby|; s|/usr/bin/ruby.*$|/usr/bin/env ruby|' \
+    /usr/local/bin/rake /usr/local/bin/bundle /usr/local/bin/bundler \
+  && chown openproject /home/openproject 
  && bundle install \
  && bundle exec rake db:create:all \
  && bundle exec rake db:migrate \
